@@ -24,6 +24,14 @@ if (($+commands[less])) && [ -x ~/.lessfilter ]; then
 else
   (($+commands[less])) || less() {command ls -l $@}
 fi
+less() {
+  # TODO: we can use lesspipe for this
+  if [ "$#" -ge 1 ]; then
+    preview-file-or-dir "$@"
+  else
+    command less "$@"
+  fi
+}
 
 # use pager to process the output of git
 (($+commands[git])) && git() {
